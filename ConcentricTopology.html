@@ -1,0 +1,435 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Concentric Topology</title>
+<style>
+.navi_li{
+	text-decoration: none;
+	color: #FFF;
+	font-weight: bold;
+	font-size: 24px;
+	}
+	</style>
+</head>
+
+<body>
+<script src="concentric/processing.min.js"></script>
+<div style="position: absolute; left: 0; top: 0; width:100%; height:100%;z-index:1; background-image: url(images/concentric9.png); layer-background-image: url(images/concentric9.png); border: 1px none #000000; background-repeat:no-repeat; background-position:center">
+</div>
+<div style="position:absolute; left:0;top:2.6%; z-index:2">
+<ul style="color: #FFF; list-style-type: none">
+<li style="margin-top: 0px;"><a href="HealthGIS_Index.html" class="navi_li">HealthGIS</a></li>
+<li style="margin-top: 13px;"><a href="map/map.html" class="navi_li">Geographic Distribution</a></li>
+<li style="margin-top: 14px;"><a href="PathPrediction.html" class="navi_li">Path Prediction</a></li>
+<li style="margin-top: 15px;"><a href="RiskRankingIndex.html" class="navi_li">Risk Ranking</a></li>
+</ul>
+</div>
+
+<div style="position:absolute;left:20%;top:23%;z-index:2">
+<img src="images/ssds_03.png" width="140" height="167" /> </div>
+
+<div style="position:absolute;left:30.6%;top:23%;z-index:2">
+<img src="images/ssds_05.png" width="104" height="93" /> </div>
+
+<div style="position:absolute;left:30.6%;top:38%;z-index:2">
+<img src="images/ssds_08.png" width="104" height="193" /> </div>
+
+<div style="position:absolute;left:4.5%;top:69%;z-index:2">
+<img src="images/ssds_12.png" width="109" height="189" /></div>
+
+<div style="position:absolute;left:20%;top:2%;z-index:2">
+<section>
+<select name="select" id="content" onchange="change(this)">
+<option value="Aksu.pde">1.Aksu</option>
+<option value="Alty.pde">2.Alty</option>
+<option value="Alxa.pde">3.Alxa</option>
+<option value="Ankang.pde">4.Ankang</option>
+<option value="Anqing.pde">5.Anqing</option>
+<option value="Anshan.pde">6.Anshan</option>
+<option value="Anshun.pde">7.Anshun</option>
+<option value="Anyang.pde">8.Anyang</option>
+<option value="Baicheng.pde">9.Baicheng</option>
+<option value="Baise.pde">10.Baise</option>
+<option value="Baishan.pde">11.Baishan</option>
+<option value="Baiyin.pde">12.Baiyin</option>
+<option value="Bangbu.pde">13.Bangbu</option>
+<option value="Baoding.pde">14.Baoding</option>
+<option value="Baoji.pde">15.Baoji</option>
+<option value="Baoshan.pde">16.Baoshan</option>
+<option value="Baoting.pde">17.Baoting</option>
+<option value="Baotou.pde">18.Baotou</option>
+<option value="Bayannur.pde">19.Bayannur</option>
+<option value="Bayingolin.pde">20.Bayingolin</option>
+<option value="Bazhong.pde">21.Bazhong</option>
+<option value="Beihai.pde">22.Beihai</option>
+<option value="Beijing.pde">23.Beijing</option>
+<option value="Benxi.pde">24.Benxi</option>
+<option value="Bijie.pde">25.Bijie</option>
+<option value="Binzhou.pde">26.Binzhou</option>
+<option value="Bortala.pde">27.Bortala</option>
+<option value="Bozhou.pde">28.Bozhou</option>
+<option value="Cangzhou.pde">29.Cangzhou</option>
+<option value="Changchun.pde">30.Changchun</option>
+<option value="Changde.pde">31.Changde</option>
+<option value="Changhua.pde">32.Changhua</option>
+<option value="Changji.pde">33.Changji</option>
+<option value="Changjiang.pde">34.Changjiang</option>
+<option value="Changsha.pde">35.Changsha</option>
+<option value="Changzhi.pde">36.Changzhi</option>
+<option value="Changzhou.pde">37.Changzhou</option>
+<option value="Chaoyang.pde">38.Chaoyang</option>
+<option value="Chaozhou.pde">39.Chaozhou</option>
+<option value="Chengde.pde">40.Chengde</option>
+<option value="Chengdou.pde">41.Chengdou</option>
+<option value="Chengmai.pde">42.Chengmai</option>
+<option value="Chenzhou.pde">43.Chenzhou</option>
+<option value="Chiayi.pde">44.Chiayi</option>
+<option value="Chifeng.pde">45.Chifeng</option>
+<option value="Chizhou.pde">46.Chizhou</option>
+<option value="Chongqing.pde">47.Chongqing</option>
+<option value="Chongzuo.pde">48.Chongzuo</option>
+<option value="Chuzhou.pde">49.Chuzhou</option>
+<option value="Dali.pde">50.Dali</option>
+<option value="Dalian.pde">51.Dalian</option>
+<option value="Dandong.pde">52.Dandong</option>
+<option value="Danzhou.pde">53.Danzhou</option>
+<option value="Daqing.pde">54.Daqing</option>
+<option value="Datong.pde">55.Datong</option>
+<option value="Daxinganling.pde">56.Daxinganling</option>
+<option value="Dazhou.pde">57.Dazhou</option>
+<option value="Dehong.pde">58.Dehong</option>
+<option value="Deyang.pde">59.Deyang</option>
+<option value="Dezhou.pde">60.Dezhou</option>
+<option value="Dingan.pde">61.Dingan</option>
+<option value="Dingxi.pde">62.Dingxi</option>
+<option value="Diqing.pde">63.Diqing</option>
+<option value="Dongfang.pde">64.Dongfang</option>
+<option value="Dongguan.pde">65.Dongguan</option>
+<option value="Dongying.pde">66.Dongying</option>
+<option value="Enshi.pde">67.Enshi</option>
+<option value="Ezhou.pde">68.Ezhou</option>
+<option value="Fangchenggang.pde">69.Fangchenggang</option>
+<option value="Foshan.pde">70.Foshan</option>
+<option value="Fushun.pde">71.Fushun</option>
+<option value="Fuxin.pde">72.Fuxin</option>
+<option value="Fuyang.pde">73.Fuyang</option>
+<option value="Fuzhou.pde">74.Fuzhou</option>
+<option value="Fuzhou.pde">75.Fuzhou</option>
+<option value="Gannan.pde">76.Gannan</option>
+<option value="Ganzhou.pde">77.Ganzhou</option>
+<option value="Garze.pde">78.Garze</option>
+<option value="Golog.pde">79.Golog</option>
+<option value="Guang'an.pde">80.Guang'an</option>
+<option value="Guangyuan.pde">81.Guangyuan</option>
+<option value="Guangzhou.pde">82.Guangzhou</option>
+<option value="Guigang.pde">83.Guigang</option>
+<option value="Guilin.pde">84.Guilin</option>
+<option value="Guiyang.pde">85.Guiyang</option>
+<option value="Guyuan.pde">86.Guyuan</option>
+<option value="Haibei.pde">87.Haibei</option>
+<option value="Haidong.pde">88.Haidong</option>
+<option value="Haikou.pde">89.Haikou</option>
+<option value="Haixi.pde">90.Haixi</option>
+<option value="Handan.pde">91.Handan</option>
+<option value="Hangzhou.pde">92.Hangzhou</option>
+<option value="Hanzhong.pde">93.Hanzhong</option>
+<option value="Harbin.pde">94.Harbin</option>
+<option value="Hebi.pde">95.Hebi</option>
+<option value="Hechi.pde">96.Hechi</option>
+<option value="Hefei.pde">97.Hefei</option>
+<option value="Hegang.pde">98.Hegang</option>
+<option value="Heihe.pde">99.Heihe</option>
+<option value="Hengshui.pde">100.Hengshui</option>
+<option value="Hengyang.pde">101.Hengyang</option>
+<option value="Heyuan.pde">102.Heyuan</option>
+<option value="Heze.pde">103.Heze</option>
+<option value="Hezhou.pde">104.Hezhou</option>
+<option value="Hinggan.pde">105.Hinggan</option>
+<option value="Hohhot.pde">106.Hohhot</option>
+<option value="Hong Kong.pde">107.Hong Kong</option>
+<option value="Honghe.pde">108.Honghe</option>
+<option value="Hotan.pde">109.Hotan</option>
+<option value="Hsinchu.pde">110.Hsinchu</option>
+<option value="Huai'an.pde">111.Huai'an</option>
+<option value="Huaibei.pde">112.Huaibei</option>
+<option value="Huaihua.pde">113.Huaihua</option>
+<option value="Huainan.pde">114.Huainan</option>
+<option value="Hualien.pde">115.Hualien</option>
+<option value="Huanggang.pde">116.Huanggang</option>
+<option value="Huangnan.pde">117.Huangnan</option>
+<option value="Huangshan.pde">118.Huangshan</option>
+<option value="Huangshi.pde">119.Huangshi</option>
+<option value="Huizhou.pde">120.Huizhou</option>
+<option value="Huludao.pde">121.Huludao</option>
+<option value="Hulunbuir.pde">122.Hulunbuir</option>
+<option value="Huzhou.pde">123.Huzhou</option>
+<option value="Ili(Yili).pde">124.Ili(Yili)</option>
+<option value="Jiamusi.pde">125.Jiamusi</option>
+<option value="Jian.pde">126.Jian</option>
+<option value="Jiangmen.pde">127.Jiangmen</option>
+<option value="Jiaozuo.pde">128.Jiaozuo</option>
+<option value="Jiaxing.pde">129.Jiaxing</option>
+<option value="Jiayuguan.pde">130.Jiayuguan</option>
+<option value="Jieyang.pde">131.Jieyang</option>
+<option value="Jilin.pde">132.Jilin</option>
+<option value="Jinan.pde">133.Jinan</option>
+<option value="Jinchang.pde">134.Jinchang</option>
+<option value="Jincheng.pde">135.Jincheng</option>
+<option value="Jingdezhen.pde">136.Jingdezhen</option>
+<option value="Jingmen.pde">137.Jingmen</option>
+<option value="Jingzhou.pde">138.Jingzhou</option>
+<option value="Jinhua.pde">139.Jinhua</option>
+<option value="Jining.pde">140.Jining</option>
+<option value="Jinzhong.pde">141.Jinzhong</option>
+<option value="Jinzhou.pde">142.Jinzhou</option>
+<option value="Jiujiang.pde">143.Jiujiang</option>
+<option value="Jiuquan.pde">144.Jiuquan</option>
+<option value="Jixi.pde">145.Jixi</option>
+<option value="Jiyuan.pde">146.Jiyuan</option>
+<option value="Kaifeng.pde">147.Kaifeng</option>
+<option value="Kaohsiung.pde">148.Kaohsiung</option>
+<option value="Kashgar.pde">149.Kashgar</option>
+<option value="Keelung.pde">150.Keelung</option>
+<option value="Keramay.pde">151.Keramay</option>
+<option value="Kezilsu.pde">152.Kezilsu</option>
+<option value="Kinmen.pde">153.Kinmen</option>
+<option value="Kumul(Hami).pde">154.Kumul(Hami)</option>
+<option value="Kunming.pde">155.Kunming</option>
+<option value="Laibin.pde">156.Laibin</option>
+<option value="Laiwu.pde">157.Laiwu</option>
+<option value="Langfang.pde">158.Langfang</option>
+<option value="Lanzhou.pde">159.Lanzhou</option>
+<option value="Ledong.pde">160.Ledong</option>
+<option value="Leshan.pde">161.Leshan</option>
+<option value="Lhasa.pde">162.Lhasa</option>
+<option value="Liangshanzhou.pde">163.Liangshanzhou</option>
+<option value="Lianyungang.pde">164.Lianyungang</option>
+<option value="Liaocheng.pde">165.Liaocheng</option>
+<option value="Liaoyang.pde">166.Liaoyang</option>
+<option value="Liaoyuan.pde">167.Liaoyuan</option>
+<option value="Lijiang.pde">168.Lijiang</option>
+<option value="Lincang.pde">169.Lincang</option>
+<option value="Linfen.pde">170.Linfen</option>
+<option value="Lingshui.pde">171.Lingshui</option>
+<option value="Linxia.pde">172.Linxia</option>
+<option value="Linyi.pde">173.Linyi</option>
+<option value="Lishui.pde">174.Lishui</option>
+<option value="Liupanshui.pde">175.Liupanshui</option>
+<option value="Liuzhou.pde">176.Liuzhou</option>
+<option value="Longnan.pde">177.Longnan</option>
+<option value="Longyan.pde">178.Longyan</option>
+<option value="Loudi.pde">179.Loudi</option>
+<option value="Lu'an.pde">180.Lu'an</option>
+<option value="Luohe.pde">181.Luohe</option>
+<option value="Luoyang.pde">182.Luoyang</option>
+<option value="Luzhou.pde">183.Luzhou</option>
+<option value="Lvliang.pde">184.Lvliang</option>
+<option value="Ma'anshan.pde">185.Ma'anshan</option>
+<option value="Macau.pde">186.Macau</option>
+<option value="Maoming.pde">187.Maoming</option>
+<option value="Meishan.pde">188.Meishan</option>
+<option value="Meizhou.pde">189.Meizhou</option>
+<option value="Mianyang.pde">190.Mianyang</option>
+<option value="Miaoli.pde">191.Miaoli</option>
+<option value="Mudanjiang.pde">192.Mudanjiang</option>
+<option value="Nagqu.pde">193.Nagqu</option>
+<option value="Nanchang.pde">194.Nanchang</option>
+<option value="Nanchong.pde">195.Nanchong</option>
+<option value="Nanjing.pde">196.Nanjing</option>
+<option value="Nanning.pde">197.Nanning</option>
+<option value="Nanping.pde">198.Nanping</option>
+<option value="Nantong.pde">199.Nantong</option>
+<option value="Nantou.pde">200.Nantou</option>
+<option value="Nanyang.pde">201.Nanyang</option>
+<option value="Neijiang.pde">202.Neijiang</option>
+<option value="New Taipei.pde">203.New Taipei</option>
+<option value="Ngari.pde">204.Ngari</option>
+<option value="Ngawa.pde">205.Ngawa</option>
+<option value="Ningbo.pde">206.Ningbo</option>
+<option value="Ningde.pde">207.Ningde</option>
+<option value="Nujiang.pde">208.Nujiang</option>
+<option value="Nyingchi.pde">209.Nyingchi</option>
+<option value="Ordos.pde">210.Ordos</option>
+<option value="Panjin.pde">211.Panjin</option>
+<option value="Panzhihua.pde">212.Panzhihua</option>
+<option value="Penghu.pde">213.Penghu</option>
+<option value="Pingdingshan.pde">214.Pingdingshan</option>
+<option value="Pingdong.pde">215.Pingdong</option>
+<option value="Pingliang.pde">216.Pingliang</option>
+<option value="Pingxiang.pde">217.Pingxiang</option>
+<option value="Pu'er.pde">218.Pu'er</option>
+<option value="Putian.pde">219.Putian</option>
+<option value="Puyang.pde">220.Puyang</option>
+<option value="Qamdo.pde">221.Qamdo</option>
+<option value="Qiandongnan.pde">222.Qiandongnan</option>
+<option value="Qiannan.pde">223.Qiannan</option>
+<option value="Qianxinan.pde">224.Qianxinan</option>
+<option value="Qingdao.pde">225.Qingdao</option>
+<option value="Qingyang.pde">226.Qingyang</option>
+<option value="Qingyuan.pde">227.Qingyuan</option>
+<option value="Qinhuangdao.pde">228.Qinhuangdao</option>
+<option value="Qinzhou.pde">229.Qinzhou</option>
+<option value="Qionghai.pde">230.Qionghai</option>
+<option value="Qiongzhong.pde">231.Qiongzhong</option>
+<option value="Qiqihar.pde">232.Qiqihar</option>
+<option value="Qitaihe.pde">233.Qitaihe</option>
+<option value="Quanzhou.pde">234.Quanzhou</option>
+<option value="Qujing.pde">235.Qujing</option>
+<option value="Quzhou.pde">236.Quzhou</option>
+<option value="Rizhao.pde">237.Rizhao</option>
+<option value="Sanmenxia.pde">238.Sanmenxia</option>
+<option value="Sanming.pde">239.Sanming</option>
+<option value="Sansha.pde">240.Sansha</option>
+<option value="Sanya.pde">241.Sanya</option>
+<option value="Shamen.pde">242.Shamen</option>
+<option value="Shanghai.pde">243.Shanghai</option>
+<option value="Shangluo.pde">244.Shangluo</option>
+<option value="Shangqiu.pde">245.Shangqiu</option>
+<option value="Shangrao.pde">246.Shangrao</option>
+<option value="Shannan.pde">247.Shannan</option>
+<option value="Shantou.pde">248.Shantou</option>
+<option value="Shanwei.pde">249.Shanwei</option>
+<option value="Shaoguan.pde">250.Shaoguan</option>
+<option value="Shaoxing.pde">251.Shaoxing</option>
+<option value="Shaoyang.pde">252.Shaoyang</option>
+<option value="Shenyang.pde">253.Shenyang</option>
+<option value="Shenzhen.pde">254.Shenzhen</option>
+<option value="Shijiazhuang.pde">255.Shijiazhuang</option>
+<option value="Shiyan.pde">256.Shiyan</option>
+<option value="Shizuishan.pde">257.Shizuishan</option>
+<option value="Shuangyashan.pde">258.Shuangyashan</option>
+<option value="Shuozhou.pde">259.Shuozhou</option>
+<option value="Siping.pde">260.Siping</option>
+<option value="Songyuan.pde">261.Songyuan</option>
+<option value="Suihua.pde">262.Suihua</option>
+<option value="Suining.pde">263.Suining</option>
+<option value="Suizhou.pde">264.Suizhou</option>
+<option value="Suzhou.pde">265.Suzhou</option>
+<option value="Tacheng.pde">266.Tacheng</option>
+<option value="Tai'an.pde">267.Tai'an</option>
+<option value="Taichung.pde">268.Taichung</option>
+<option value="Taidong.pde">269.Taidong</option>
+<option value="Tainan.pde">270.Tainan</option>
+<option value="Taipei.pde">271.Taipei</option>
+<option value="Taiyuan.pde">272.Taiyuan</option>
+<option value="Taizhou.pde">273.Taizhou</option>
+<option value="Taizhou.pde">274.Taizhou</option>
+<option value="Tangshan.pde">275.Tangshan</option>
+<option value="Taoyuan.pde">276.Taoyuan</option>
+<option value="Tianjin.pde">277.Tianjin</option>
+<option value="Tianshui.pde">278.Tianshui</option>
+<option value="Tieling.pde">279.Tieling</option>
+<option value="Tongchuan.pde">280.Tongchuan</option>
+<option value="Tonghua.pde">281.Tonghua</option>
+<option value="Tongliao.pde">282.Tongliao</option>
+<option value="Tongling.pde">283.Tongling</option>
+<option value="Tongren.pde">284.Tongren</option>
+<option value="Turpan.pde">285.Turpan</option>
+<option value="Ulanqab.pde">286.Ulanqab</option>
+<option value="Urumqi.pde">287.Urumqi</option>
+<option value="Wanning.pde">288.Wanning</option>
+<option value="Weicu.pde">289.Weicu</option>
+<option value="Weifang.pde">290.Weifang</option>
+<option value="Weihai.pde">291.Weihai</option>
+<option value="Weinan.pde">292.Weinan</option>
+<option value="Wenchang.pde">293.Wenchang</option>
+<option value="Wenshan.pde">294.Wenshan</option>
+<option value="Wenzhou.pde">295.Wenzhou</option>
+<option value="Wuhai.pde">296.Wuhai</option>
+<option value="Wuhan.pde">297.Wuhan</option>
+<option value="Wuhu.pde">298.Wuhu</option>
+<option value="Wuwei.pde">299.Wuwei</option>
+<option value="Wuxi.pde">300.Wuxi</option>
+<option value="Wuzhishan.pde">301.Wuzhishan</option>
+<option value="Wuzhong.pde">302.Wuzhong</option>
+<option value="Wuzhou.pde">303.Wuzhou</option>
+<option value="Xi'an.pde">304.Xi'an</option>
+<option value="Xiangtan.pde">305.Xiangtan</option>
+<option value="Xiangxi.pde">306.Xiangxi</option>
+<option value="Xiangyang.pde">307.Xiangyang</option>
+<option value="Xianning.pde">308.Xianning</option>
+<option value="Xianyang.pde">309.Xianyang</option>
+<option value="Xiaogan.pde">310.Xiaogan</option>
+<option value="Xilingol.pde">311.Xilingol</option>
+<option value="Xingtai.pde">312.Xingtai</option>
+<option value="Xining.pde">313.Xining</option>
+<option value="Xinxiang.pde">314.Xinxiang</option>
+<option value="Xinyang.pde">315.Xinyang</option>
+<option value="Xinyu.pde">316.Xinyu</option>
+<option value="Xinzhou.pde">317.Xinzhou</option>
+<option value="Xishuangbanna.pde">318.Xishuangbanna</option>
+<option value="Xiuqian.pde">319.Xiuqian</option>
+<option value="Xiuzhou.pde">320.Xiuzhou</option>
+<option value="Xuancheng.pde">321.Xuancheng</option>
+<option value="Xuchang.pde">322.Xuchang</option>
+<option value="Xuzhou.pde">323.Xuzhou</option>
+<option value="Ya'an.pde">324.Ya'an</option>
+<option value="Yan'an.pde">325.Yan'an</option>
+<option value="Yanbian.pde">326.Yanbian</option>
+<option value="Yancheng.pde">327.Yancheng</option>
+<option value="Yangjiang.pde">328.Yangjiang</option>
+<option value="Yangquan.pde">329.Yangquan</option>
+<option value="Yangzhou.pde">330.Yangzhou</option>
+<option value="Yantai.pde">331.Yantai</option>
+<option value="Yibin.pde">332.Yibin</option>
+<option value="Yichang.pde">333.Yichang</option>
+<option value="Yichun.pde">334.Yichun</option>
+<option value="Yichun.pde">335.Yichun</option>
+<option value="Yilan.pde">336.Yilan</option>
+<option value="Yinchuan.pde">337.Yinchuan</option>
+<option value="Yingkou.pde">338.Yingkou</option>
+<option value="Yingtan.pde">339.Yingtan</option>
+<option value="Yiyang.pde">340.Yiyang</option>
+<option value="Yongzhou.pde">341.Yongzhou</option>
+<option value="Yueyang.pde">342.Yueyang</option>
+<option value="Yulin.pde">343.Yulin</option>
+<option value="Yulin.pde">344.Yulin</option>
+<option value="Yuncheng.pde">345.Yuncheng</option>
+<option value="Yunfu.pde">346.Yunfu</option>
+<option value="Yunlin.pde">347.Yunlin</option>
+<option value="Yushuzhou.pde">348.Yushuzhou</option>
+<option value="Yuxi.pde">349.Yuxi</option>
+<option value="Zaozhuang.pde">350.Zaozhuang</option>
+<option value="Zhangjiajie.pde">351.Zhangjiajie</option>
+<option value="Zhangjiakou.pde">352.Zhangjiakou</option>
+<option value="Zhangye.pde">353.Zhangye</option>
+<option value="Zhangzhou.pde">354.Zhangzhou</option>
+<option value="Zhanjiang.pde">355.Zhanjiang</option>
+<option value="Zhaoqing.pde">356.Zhaoqing</option>
+<option value="Zhaotong.pde">357.Zhaotong</option>
+<option value="Zhengzhou.pde">358.Zhengzhou</option>
+<option value="Zhenjiang.pde">359.Zhenjiang</option>
+<option value="Zhongshan.pde">360.Zhongshan</option>
+<option value="Zhongwei.pde">361.Zhongwei</option>
+<option value="Zhoukou.pde">362.Zhoukou</option>
+<option value="Zhoushan.pde">363.Zhoushan</option>
+<option value="Zhuhai.pde">364.Zhuhai</option>
+<option value="Zhumadian.pde">365.Zhumadian</option>
+<option value="Zhuzhou.pde">366.Zhuzhou</option>
+<option value="Zibo.pde">367.Zibo</option>
+<option value="Zigong.pde">368.Zigong</option>
+<option value="Ziyang.pde">369.Ziyang</option>
+<option value="Zunyi.pde">370.Zunyi</option>
+</select>
+<input type="button" id="btn" value="ok" onclick="document.getElementById('mycanvas').data-processing-sources=center;"  >
+<input type="button" value="clear" onclick="location.assign(location)">
+</section>
+</div>
+
+<div style="position: absolute; left: 45%; top: 0; width: 55%; height: 100%; z-index: 3;">
+<canvas id="mycanvas" >
+</canvas>
+</div>
+<script>
+	var center;
+	function change(obj)
+	{
+		//alert("g0");
+		center="concentric/"+obj.options[obj.selectedIndex].value;
+		alert(center);
+		//alert("go");
+	}
+</script>
+</body>
+</html>

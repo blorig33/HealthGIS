@@ -1,0 +1,993 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>PathPredictionIndex</title>
+<style type="text/css">
+.navi_li{
+	text-decoration: none;
+	color: #FFF;
+	font-weight: bold;
+	font-size: 24px;
+	}
+	.node {
+    cursor: pointer;
+  }
+
+  .overlay{
+      background-color:#EEE;
+  }
+   
+  .node circle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+  }
+   
+  .node text {
+    font-size:10px; 
+    font-family:sans-serif;
+  }
+   
+  .link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 1.5px;
+  }
+
+  .templink {
+    fill: none;
+    stroke: red;
+    stroke-width: 3px;
+  }
+
+  .ghostCircle.show{
+      display:block;
+  }
+
+  .ghostCircle, .activeDrag .ghostCircle{
+       display: none;
+  }
+</style>
+</head>
+<script src="../jquery.min.js"></script>
+<script src="../d3.v3.min.js"></script>
+<body>
+<div style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index:1; background-image: url(../images/tree.png); layer-background-image: url(../images/tree.png); border: 1px none #000000; background-repeat:no-repeat; background-position:center">
+</div>
+<div style="position:absolute; left:0;top:3.3%; z-index:2">
+<ul style="color: #FFF; list-style-type: none">
+<li style="margin-top: 0px;"><a href="#" class="navi_li">HealthGIS</a></li>
+<li style="margin-top: 18px;"><a href="#" class="navi_li">Geographic Distribution</a></li>
+<li style="margin-top: 17px;"><a href="#" class="navi_li">Concentric Topology</a></li>
+<li style="margin-top: 16px;"><a href="#" class="navi_li">Risk Ranking</a></li>
+</ul>
+</div>
+<div style="position:absolute; left:45%;top:73%; z-index:2">
+<img src="../images/tree_03.png" width="150" height="150" 
+onmouseover="this.src='images/tree_04.png';"
+onmouseout="this.src='images/tree_03.png';"/> 
+</div>
+
+<div style="position:absolute; left:0; top:100%;z-index:1">
+<section>
+<select name="select" id="content">
+<option value="1.Aksu">1.Aksu</option>
+<option value="2.Alty">2.Alty</option>
+<option value="3.Alxa">3.Alxa</option>
+<option value="4.Ankang">4.Ankang</option>
+<option value="5.Anqing">5.Anqing</option>
+<option value="6.Anshan">6.Anshan</option>
+<option value="7.Anshun">7.Anshun</option>
+<option value="8.Anyang">8.Anyang</option>
+<option value="9.Baicheng">9.Baicheng</option>
+<option value="10.Baise">10.Baise</option>
+<option value="11.Baishan">11.Baishan</option>
+<option value="12.Baiyin">12.Baiyin</option>
+<option value="13.Bangbu">13.Bangbu</option>
+<option value="14.Baoding">14.Baoding</option>
+<option value="15.Baoji">15.Baoji</option>
+<option value="16.Baoshan">16.Baoshan</option>
+<option value="17.Baoting">17.Baoting</option>
+<option value="18.Baotou">18.Baotou</option>
+<option value="19.Bayannur">19.Bayannur</option>
+<option value="20.Bayingolin">20.Bayingolin</option>
+<option value="21.Bazhong">21.Bazhong</option>
+<option value="22.Beihai">22.Beihai</option>
+<option value="23.Beijing">23.Beijing</option>
+<option value="24.Benxi">24.Benxi</option>
+<option value="25.Bijie">25.Bijie</option>
+<option value="26.Binzhou">26.Binzhou</option>
+<option value="27.Bortala">27.Bortala</option>
+<option value="28.Bozhou">28.Bozhou</option>
+<option value="29.Cangzhou">29.Cangzhou</option>
+<option value="30.Changchun">30.Changchun</option>
+<option value="31.Changde">31.Changde</option>
+<option value="32.Changhua">32.Changhua</option>
+<option value="33.Changji">33.Changji</option>
+<option value="34.Changjiang">34.Changjiang</option>
+<option value="35.Changsha">35.Changsha</option>
+<option value="36.Changzhi">36.Changzhi</option>
+<option value="37.Changzhou">37.Changzhou</option>
+<option value="38.Chaoyang">38.Chaoyang</option>
+<option value="39.Chaozhou">39.Chaozhou</option>
+<option value="40.Chengde">40.Chengde</option>
+<option value="41.Chengdou">41.Chengdou</option>
+<option value="42.Chengmai">42.Chengmai</option>
+<option value="43.Chenzhou">43.Chenzhou</option>
+<option value="44.Chiayi">44.Chiayi</option>
+<option value="45.Chifeng">45.Chifeng</option>
+<option value="46.Chizhou">46.Chizhou</option>
+<option value="47.Chongqing">47.Chongqing</option>
+<option value="48.Chongzuo">48.Chongzuo</option>
+<option value="49.Chuzhou">49.Chuzhou</option>
+<option value="50.Dali">50.Dali</option>
+<option value="51.Dalian">51.Dalian</option>
+<option value="52.Dandong">52.Dandong</option>
+<option value="53.Danzhou">53.Danzhou</option>
+<option value="54.Daqing">54.Daqing</option>
+<option value="55.Datong">55.Datong</option>
+<option value="56.Daxinganling">56.Daxinganling</option>
+<option value="57.Dazhou">57.Dazhou</option>
+<option value="58.Dehong">58.Dehong</option>
+<option value="59.Deyang">59.Deyang</option>
+<option value="60.Dezhou">60.Dezhou</option>
+<option value="61.Dingan">61.Dingan</option>
+<option value="62.Dingxi">62.Dingxi</option>
+<option value="63.Diqing">63.Diqing</option>
+<option value="64.Dongfang">64.Dongfang</option>
+<option value="65.Dongguan">65.Dongguan</option>
+<option value="66.Dongying">66.Dongying</option>
+<option value="67.Enshi">67.Enshi</option>
+<option value="68.Ezhou">68.Ezhou</option>
+<option value="69.Fangchenggang">69.Fangchenggang</option>
+<option value="70.Foshan">70.Foshan</option>
+<option value="71.Fushun">71.Fushun</option>
+<option value="72.Fuxin">72.Fuxin</option>
+<option value="73.Fuyang">73.Fuyang</option>
+<option value="74.Fuzhou">74.Fuzhou</option>
+<option value="75.Fuzhou">75.Fuzhou</option>
+<option value="76.Gannan">76.Gannan</option>
+<option value="77.Ganzhou">77.Ganzhou</option>
+<option value="78.Garze">78.Garze</option>
+<option value="79.Golog">79.Golog</option>
+<option value="80.Guang'an">80.Guang'an</option>
+<option value="81.Guangyuan">81.Guangyuan</option>
+<option value="82.Guangzhou">82.Guangzhou</option>
+<option value="83.Guigang">83.Guigang</option>
+<option value="84.Guilin">84.Guilin</option>
+<option value="85.Guiyang">85.Guiyang</option>
+<option value="86.Guyuan">86.Guyuan</option>
+<option value="87.Haibei">87.Haibei</option>
+<option value="88.Haidong">88.Haidong</option>
+<option value="89.Haikou">89.Haikou</option>
+<option value="90.Haixi">90.Haixi</option>
+<option value="91.Handan">91.Handan</option>
+<option value="92.Hangzhou">92.Hangzhou</option>
+<option value="93.Hanzhong">93.Hanzhong</option>
+<option value="94.Harbin">94.Harbin</option>
+<option value="95.Hebi">95.Hebi</option>
+<option value="96.Hechi">96.Hechi</option>
+<option value="97.Hefei">97.Hefei</option>
+<option value="98.Hegang">98.Hegang</option>
+<option value="99.Heihe">99.Heihe</option>
+<option value="100.Hengshui">100.Hengshui</option>
+<option value="101.Hengyang">101.Hengyang</option>
+<option value="102.Heyuan">102.Heyuan</option>
+<option value="103.Heze">103.Heze</option>
+<option value="104.Hezhou">104.Hezhou</option>
+<option value="105.Hinggan">105.Hinggan</option>
+<option value="106.Hohhot">106.Hohhot</option>
+<option value="107.Hong Kong">107.Hong Kong</option>
+<option value="108.Honghe">108.Honghe</option>
+<option value="109.Hotan">109.Hotan</option>
+<option value="110.Hsinchu">110.Hsinchu</option>
+<option value="111.Huai'an">111.Huai'an</option>
+<option value="112.Huaibei">112.Huaibei</option>
+<option value="113.Huaihua">113.Huaihua</option>
+<option value="114.Huainan">114.Huainan</option>
+<option value="115.Hualien">115.Hualien</option>
+<option value="116.Huanggang">116.Huanggang</option>
+<option value="117.Huangnan">117.Huangnan</option>
+<option value="118.Huangshan">118.Huangshan</option>
+<option value="119.Huangshi">119.Huangshi</option>
+<option value="120.Huizhou">120.Huizhou</option>
+<option value="121.Huludao">121.Huludao</option>
+<option value="122.Hulunbuir">122.Hulunbuir</option>
+<option value="123.Huzhou">123.Huzhou</option>
+<option value="124.Ili(Yili)">124.Ili(Yili)</option>
+<option value="125.Jiamusi">125.Jiamusi</option>
+<option value="126.Jian">126.Jian</option>
+<option value="127.Jiangmen">127.Jiangmen</option>
+<option value="128.Jiaozuo">128.Jiaozuo</option>
+<option value="129.Jiaxing">129.Jiaxing</option>
+<option value="130.Jiayuguan">130.Jiayuguan</option>
+<option value="131.Jieyang">131.Jieyang</option>
+<option value="132.Jilin">132.Jilin</option>
+<option value="133.Jinan">133.Jinan</option>
+<option value="134.Jinchang">134.Jinchang</option>
+<option value="135.Jincheng">135.Jincheng</option>
+<option value="136.Jingdezhen">136.Jingdezhen</option>
+<option value="137.Jingmen">137.Jingmen</option>
+<option value="138.Jingzhou">138.Jingzhou</option>
+<option value="139.Jinhua">139.Jinhua</option>
+<option value="140.Jining">140.Jining</option>
+<option value="141.Jinzhong">141.Jinzhong</option>
+<option value="142.Jinzhou">142.Jinzhou</option>
+<option value="143.Jiujiang">143.Jiujiang</option>
+<option value="144.Jiuquan">144.Jiuquan</option>
+<option value="145.Jixi">145.Jixi</option>
+<option value="146.Jiyuan">146.Jiyuan</option>
+<option value="147.Kaifeng">147.Kaifeng</option>
+<option value="148.Kaohsiung">148.Kaohsiung</option>
+<option value="149.Kashgar">149.Kashgar</option>
+<option value="150.Keelung">150.Keelung</option>
+<option value="151.Keramay">151.Keramay</option>
+<option value="152.Kezilsu">152.Kezilsu</option>
+<option value="153.Kinmen">153.Kinmen</option>
+<option value="154.Kumul(Hami)">154.Kumul(Hami)</option>
+<option value="155.Kunming">155.Kunming</option>
+<option value="156.Laibin">156.Laibin</option>
+<option value="157.Laiwu">157.Laiwu</option>
+<option value="158.Langfang">158.Langfang</option>
+<option value="159.Lanzhou">159.Lanzhou</option>
+<option value="160.Ledong">160.Ledong</option>
+<option value="161.Leshan">161.Leshan</option>
+<option value="162.Lhasa">162.Lhasa</option>
+<option value="163.Liangshanzhou">163.Liangshanzhou</option>
+<option value="164.Lianyungang">164.Lianyungang</option>
+<option value="165.Liaocheng">165.Liaocheng</option>
+<option value="166.Liaoyang">166.Liaoyang</option>
+<option value="167.Liaoyuan">167.Liaoyuan</option>
+<option value="168.Lijiang">168.Lijiang</option>
+<option value="169.Lincang">169.Lincang</option>
+<option value="170.Linfen">170.Linfen</option>
+<option value="171.Lingshui">171.Lingshui</option>
+<option value="172.Linxia">172.Linxia</option>
+<option value="173.Linyi">173.Linyi</option>
+<option value="174.Lishui">174.Lishui</option>
+<option value="175.Liupanshui">175.Liupanshui</option>
+<option value="176.Liuzhou">176.Liuzhou</option>
+<option value="177.Longnan">177.Longnan</option>
+<option value="178.Longyan">178.Longyan</option>
+<option value="179.Loudi">179.Loudi</option>
+<option value="180.Lu'an">180.Lu'an</option>
+<option value="181.Luohe">181.Luohe</option>
+<option value="182.Luoyang">182.Luoyang</option>
+<option value="183.Luzhou">183.Luzhou</option>
+<option value="184.Lvliang">184.Lvliang</option>
+<option value="185.Ma'anshan">185.Ma'anshan</option>
+<option value="186.Macau">186.Macau</option>
+<option value="187.Maoming">187.Maoming</option>
+<option value="188.Meishan">188.Meishan</option>
+<option value="189.Meizhou">189.Meizhou</option>
+<option value="190.Mianyang">190.Mianyang</option>
+<option value="191.Miaoli">191.Miaoli</option>
+<option value="192.Mudanjiang">192.Mudanjiang</option>
+<option value="193.Nagqu">193.Nagqu</option>
+<option value="194.Nanchang">194.Nanchang</option>
+<option value="195.Nanchong">195.Nanchong</option>
+<option value="196.Nanjing">196.Nanjing</option>
+<option value="197.Nanning">197.Nanning</option>
+<option value="198.Nanping">198.Nanping</option>
+<option value="199.Nantong">199.Nantong</option>
+<option value="200.Nantou">200.Nantou</option>
+<option value="201.Nanyang">201.Nanyang</option>
+<option value="202.Neijiang">202.Neijiang</option>
+<option value="203.New Taipei">203.New Taipei</option>
+<option value="204.Ngari">204.Ngari</option>
+<option value="205.Ngawa">205.Ngawa</option>
+<option value="206.Ningbo">206.Ningbo</option>
+<option value="207.Ningde">207.Ningde</option>
+<option value="208.Nujiang">208.Nujiang</option>
+<option value="209.Nyingchi">209.Nyingchi</option>
+<option value="210.Ordos">210.Ordos</option>
+<option value="211.Panjin">211.Panjin</option>
+<option value="212.Panzhihua">212.Panzhihua</option>
+<option value="213.Penghu">213.Penghu</option>
+<option value="214.Pingdingshan">214.Pingdingshan</option>
+<option value="215.Pingdong">215.Pingdong</option>
+<option value="216.Pingliang">216.Pingliang</option>
+<option value="217.Pingxiang">217.Pingxiang</option>
+<option value="218.Pu'er">218.Pu'er</option>
+<option value="219.Putian">219.Putian</option>
+<option value="220.Puyang">220.Puyang</option>
+<option value="221.Qamdo">221.Qamdo</option>
+<option value="222.Qiandongnan">222.Qiandongnan</option>
+<option value="223.Qiannan">223.Qiannan</option>
+<option value="224.Qianxinan">224.Qianxinan</option>
+<option value="225.Qingdao">225.Qingdao</option>
+<option value="226.Qingyang">226.Qingyang</option>
+<option value="227.Qingyuan">227.Qingyuan</option>
+<option value="228.Qinhuangdao">228.Qinhuangdao</option>
+<option value="229.Qinzhou">229.Qinzhou</option>
+<option value="230.Qionghai">230.Qionghai</option>
+<option value="231.Qiongzhong">231.Qiongzhong</option>
+<option value="232.Qiqihar">232.Qiqihar</option>
+<option value="233.Qitaihe">233.Qitaihe</option>
+<option value="234.Quanzhou">234.Quanzhou</option>
+<option value="235.Qujing">235.Qujing</option>
+<option value="236.Quzhou">236.Quzhou</option>
+<option value="237.Rizhao">237.Rizhao</option>
+<option value="238.Sanmenxia">238.Sanmenxia</option>
+<option value="239.Sanming">239.Sanming</option>
+<option value="240.Sansha">240.Sansha</option>
+<option value="241.Sanya">241.Sanya</option>
+<option value="242.Shamen">242.Shamen</option>
+<option value="243.Shanghai">243.Shanghai</option>
+<option value="244.Shangluo">244.Shangluo</option>
+<option value="245.Shangqiu">245.Shangqiu</option>
+<option value="246.Shangrao">246.Shangrao</option>
+<option value="247.Shannan">247.Shannan</option>
+<option value="248.Shantou">248.Shantou</option>
+<option value="249.Shanwei">249.Shanwei</option>
+<option value="250.Shaoguan">250.Shaoguan</option>
+<option value="251.Shaoxing">251.Shaoxing</option>
+<option value="252.Shaoyang">252.Shaoyang</option>
+<option value="253.Shenyang">253.Shenyang</option>
+<option value="254.Shenzhen">254.Shenzhen</option>
+<option value="255.Shijiazhuang">255.Shijiazhuang</option>
+<option value="256.Shiyan">256.Shiyan</option>
+<option value="257.Shizuishan">257.Shizuishan</option>
+<option value="258.Shuangyashan">258.Shuangyashan</option>
+<option value="259.Shuozhou">259.Shuozhou</option>
+<option value="260.Siping">260.Siping</option>
+<option value="261.Songyuan">261.Songyuan</option>
+<option value="262.Suihua">262.Suihua</option>
+<option value="263.Suining">263.Suining</option>
+<option value="264.Suizhou">264.Suizhou</option>
+<option value="265.Suzhou">265.Suzhou</option>
+<option value="266.Tacheng">266.Tacheng</option>
+<option value="267.Tai'an">267.Tai'an</option>
+<option value="268.Taichung">268.Taichung</option>
+<option value="269.Taidong">269.Taidong</option>
+<option value="270.Tainan">270.Tainan</option>
+<option value="271.Taipei">271.Taipei</option>
+<option value="272.Taiyuan">272.Taiyuan</option>
+<option value="273.Taizhou">273.Taizhou</option>
+<option value="274.Taizhou">274.Taizhou</option>
+<option value="275.Tangshan">275.Tangshan</option>
+<option value="276.Taoyuan">276.Taoyuan</option>
+<option value="277.Tianjin">277.Tianjin</option>
+<option value="278.Tianshui">278.Tianshui</option>
+<option value="279.Tieling">279.Tieling</option>
+<option value="280.Tongchuan">280.Tongchuan</option>
+<option value="281.Tonghua">281.Tonghua</option>
+<option value="282.Tongliao">282.Tongliao</option>
+<option value="283.Tongling">283.Tongling</option>
+<option value="284.Tongren">284.Tongren</option>
+<option value="285.Turpan">285.Turpan</option>
+<option value="286.Ulanqab">286.Ulanqab</option>
+<option value="287.Urumqi">287.Urumqi</option>
+<option value="288.Wanning">288.Wanning</option>
+<option value="289.Weicu">289.Weicu</option>
+<option value="290.Weifang">290.Weifang</option>
+<option value="291.Weihai">291.Weihai</option>
+<option value="292.Weinan">292.Weinan</option>
+<option value="293.Wenchang">293.Wenchang</option>
+<option value="294.Wenshan">294.Wenshan</option>
+<option value="295.Wenzhou">295.Wenzhou</option>
+<option value="296.Wuhai">296.Wuhai</option>
+<option value="297.Wuhan">297.Wuhan</option>
+<option value="298.Wuhu">298.Wuhu</option>
+<option value="299.Wuwei">299.Wuwei</option>
+<option value="300.Wuxi">300.Wuxi</option>
+<option value="301.Wuzhishan">301.Wuzhishan</option>
+<option value="302.Wuzhong">302.Wuzhong</option>
+<option value="303.Wuzhou">303.Wuzhou</option>
+<option value="304.Xi'an">304.Xi'an</option>
+<option value="305.Xiangtan">305.Xiangtan</option>
+<option value="306.Xiangxi">306.Xiangxi</option>
+<option value="307.Xiangyang">307.Xiangyang</option>
+<option value="308.Xianning">308.Xianning</option>
+<option value="309.Xianyang">309.Xianyang</option>
+<option value="310.Xiaogan">310.Xiaogan</option>
+<option value="311.Xilingol">311.Xilingol</option>
+<option value="312.Xingtai">312.Xingtai</option>
+<option value="313.Xining">313.Xining</option>
+<option value="314.Xinxiang">314.Xinxiang</option>
+<option value="315.Xinyang">315.Xinyang</option>
+<option value="316.Xinyu">316.Xinyu</option>
+<option value="317.Xinzhou">317.Xinzhou</option>
+<option value="318.Xishuangbanna">318.Xishuangbanna</option>
+<option value="319.Xiuqian">319.Xiuqian</option>
+<option value="320.Xiuzhou">320.Xiuzhou</option>
+<option value="321.Xuancheng">321.Xuancheng</option>
+<option value="322.Xuchang">322.Xuchang</option>
+<option value="323.Xuzhou">323.Xuzhou</option>
+<option value="324.Ya'an">324.Ya'an</option>
+<option value="325.Yan'an">325.Yan'an</option>
+<option value="326.Yanbian">326.Yanbian</option>
+<option value="327.Yancheng">327.Yancheng</option>
+<option value="328.Yangjiang">328.Yangjiang</option>
+<option value="329.Yangquan">329.Yangquan</option>
+<option value="330.Yangzhou">330.Yangzhou</option>
+<option value="331.Yantai">331.Yantai</option>
+<option value="332.Yibin">332.Yibin</option>
+<option value="333.Yichang">333.Yichang</option>
+<option value="334.Yichun">334.Yichun</option>
+<option value="335.Yichun">335.Yichun</option>
+<option value="336.Yilan">336.Yilan</option>
+<option value="337.Yinchuan">337.Yinchuan</option>
+<option value="338.Yingkou">338.Yingkou</option>
+<option value="339.Yingtan">339.Yingtan</option>
+<option value="340.Yiyang">340.Yiyang</option>
+<option value="341.Yongzhou">341.Yongzhou</option>
+<option value="342.Yueyang">342.Yueyang</option>
+<option value="343.Yulin">343.Yulin</option>
+<option value="344.Yulin">344.Yulin</option>
+<option value="345.Yuncheng">345.Yuncheng</option>
+<option value="346.Yunfu">346.Yunfu</option>
+<option value="347.Yunlin">347.Yunlin</option>
+<option value="348.Yushuzhou">348.Yushuzhou</option>
+<option value="349.Yuxi">349.Yuxi</option>
+<option value="350.Zaozhuang">350.Zaozhuang</option>
+<option value="351.Zhangjiajie">351.Zhangjiajie</option>
+<option value="352.Zhangjiakou">352.Zhangjiakou</option>
+<option value="353.Zhangye">353.Zhangye</option>
+<option value="354.Zhangzhou">354.Zhangzhou</option>
+<option value="355.Zhanjiang">355.Zhanjiang</option>
+<option value="356.Zhaoqing">356.Zhaoqing</option>
+<option value="357.Zhaotong">357.Zhaotong</option>
+<option value="358.Zhengzhou">358.Zhengzhou</option>
+<option value="359.Zhenjiang">359.Zhenjiang</option>
+<option value="360.Zhongshan">360.Zhongshan</option>
+<option value="361.Zhongwei">361.Zhongwei</option>
+<option value="362.Zhoukou">362.Zhoukou</option>
+<option value="363.Zhoushan">363.Zhoushan</option>
+<option value="364.Zhuhai">364.Zhuhai</option>
+<option value="365.Zhumadian">365.Zhumadian</option>
+<option value="366.Zhuzhou">366.Zhuzhou</option>
+<option value="367.Zibo">367.Zibo</option>
+<option value="368.Zigong">368.Zigong</option>
+<option value="369.Ziyang">369.Ziyang</option>
+<option value="370.Zunyi">370.Zunyi</option>
+  
+  </select>
+<input type="button" id="btn" value="ok" onclick="show()">
+<input type="button" value="clear" onclick="location.assign(location)">
+</section>  
+
+<section>
+    <div id="tree-container"></div>
+<script>
+	  function free()
+	  {
+	  	location.assign(location);
+	  }
+
+    function show()
+    {
+ 	  	  oText=document.getElementById("content");    
+        place=oText.value+".json";
+        	
+treeJSON = d3.json(place, function(error, treeData) {
+
+    // Calculate total nodes, max label length
+    var totalNodes = 0;
+    var maxLabelLength = 0;
+    // variables for drag/drop
+    var selectedNode = null;
+    var draggingNode = null;
+    // panning variables
+    var panSpeed = 200;
+    var panBoundary = 20; // Within 20px from edges will pan when dragging.
+    // Misc. variables
+    var i = 0;
+    var duration = 750;
+    var root;
+    var Width = 500,Height = 5000;
+    // size of the diagram
+    var viewerWidth = $(document).width()*0.5;
+    var viewerHeight = $(document).height()*0.9;
+
+    var tree = d3.layout.tree()
+        .size([viewerHeight, viewerWidth]);
+      
+
+    // define a d3 diagonal projection for use by the node paths later on.
+    var diagonal = d3.svg.diagonal()
+        .projection(function(d) {
+            return [d.y, d.x];
+        });
+
+    // A recursive helper function for performing some setup by walking through all nodes
+
+    function visit(parent, visitFn, childrenFn) {
+        if (!parent) return;
+
+        visitFn(parent);
+
+        var children = childrenFn(parent);
+        if (children) {
+            var count = children.length;
+            for (var i = 0; i < count; i++) {
+                visit(children[i], visitFn, childrenFn);
+            }
+        }
+    }
+
+    // Call visit function to establish maxLabelLength
+    visit(treeData, function(d) {
+        totalNodes++;
+        maxLabelLength = Math.max(d.name.length, maxLabelLength);
+
+    }, function(d) {
+        return d.children && d.children.length > 0 ? d.children : null;
+    });
+
+
+    // sort the tree according to the node names
+
+    function sortTree() {
+        tree.sort(function(a, b) {
+            return b.name.toLowerCase() < a.name.toLowerCase() ? 1 : -1;
+        });
+    }
+    // Sort the tree initially incase the JSON isn't in a sorted order.
+    sortTree();
+
+    // TODO: Pan function, can be better implemented.
+
+    function pan(domNode, direction) {
+        var speed = panSpeed;
+        if (panTimer) {
+            clearTimeout(panTimer);
+            translateCoords = d3.transform(svgGroup.attr("transform"));
+            if (direction == 'left' || direction == 'right') {
+                translateX = direction == 'left' ? translateCoords.translate[0] + speed : translateCoords.translate[0] - speed;
+                translateY = translateCoords.translate[1];
+            } else if (direction == 'up' || direction == 'down') {
+                translateX = translateCoords.translate[0];
+                translateY = direction == 'up' ? translateCoords.translate[1] + speed : translateCoords.translate[1] - speed;
+            }
+            scaleX = translateCoords.scale[0];
+            scaleY = translateCoords.scale[1];
+            scale = zoomListener.scale();
+            svgGroup.transition().attr("transform", "translate(" + translateX + "," + translateY + ")scale(" + scale + ")");
+            d3.select(domNode).select('g.node').attr("transform", "translate(" + translateX + "," + translateY + ")");
+            zoomListener.scale(zoomListener.scale());
+            zoomListener.translate([translateX, translateY]);
+            panTimer = setTimeout(function() {
+                pan(domNode, speed, direction);
+            }, 50);
+        }
+    }
+
+    // Define the zoom function for the zoomable tree
+
+    function zoom() {
+        svgGroup.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+    }
+
+
+    // define the zoomListener which calls the zoom function on the "zoom" event constrained within the scaleExtents
+    var zoomListener = d3.behavior.zoom().scaleExtent([0.1, 3]).on("zoom", zoom);
+/*
+    function initiateDrag(d, domNode) {
+        draggingNode = d;
+        d3.select(domNode).select('.ghostCircle').attr('pointer-events', 'none');
+        d3.selectAll('.ghostCircle').attr('class', 'ghostCircle show');
+        d3.select(domNode).attr('class', 'node activeDrag');
+
+        svgGroup.selectAll("g.node").sort(function(a, b) { // select the parent and sort the path's
+            if (a.id != draggingNode.id) return 1; // a is not the hovered element, send "a" to the back
+            else return -1; // a is the hovered element, bring "a" to the front
+        });
+        // if nodes has children, remove the links and nodes
+        if (nodes.length > 1) {
+            // remove link paths
+            links = tree.links(nodes);
+            nodePaths = svgGroup.selectAll("path.link")
+                .data(links, function(d) {
+                    return d.target.id;
+                }).remove();
+            // remove child nodes
+            nodesExit = svgGroup.selectAll("g.node")
+                .data(nodes, function(d) {
+                    return d.id;
+                }).filter(function(d, i) {
+                    if (d.id == draggingNode.id) {
+                        return false;
+                    }
+                    return true;
+                }).remove();
+        }
+
+        // remove parent link
+        parentLink = tree.links(tree.nodes(draggingNode.parent));
+        svgGroup.selectAll('path.link').filter(function(d, i) {
+            if (d.target.id == draggingNode.id) {
+                return true;
+            }
+            return false;
+        }).remove();
+
+        dragStarted = null;
+    }
+*/
+    // define the baseSvg, attaching a class for styling and the zoomListener
+    var baseSvg = d3.select("#tree-container").append("svg")
+        .attr("width", viewerWidth)
+        .attr("height", viewerHeight)
+        .attr("class", "overlay")
+        .call(zoomListener);
+
+
+    // Define the drag listeners for drag/drop behaviour of nodes.
+    dragListener = d3.behavior.drag()
+        .on("dragstart", function(d) {
+            if (d == root) {
+                return;
+            }
+            dragStarted = true;
+            nodes = tree.nodes(d);
+            d3.event.sourceEvent.stopPropagation();
+            // it's important that we suppress the mouseover event on the node being dragged. Otherwise it will absorb the mouseover event and the underlying node will not detect it d3.select(this).attr('pointer-events', 'none');
+        })
+        .on("drag", function(d) {
+            if (d == root) {
+                return;
+            }
+            if (dragStarted) {
+                domNode = this;
+                initiateDrag(d, domNode);
+            }
+
+            // get coords of mouseEvent relative to svg container to allow for panning
+            relCoords = d3.mouse($('svg').get(0));
+            if (relCoords[0] < panBoundary) {
+                panTimer = true;
+                pan(this, 'left');
+            } else if (relCoords[0] > ($('svg').width() - panBoundary)) {
+
+                panTimer = true;
+                pan(this, 'right');
+            } else if (relCoords[1] < panBoundary) {
+                panTimer = true;
+                pan(this, 'up');
+            } else if (relCoords[1] > ($('svg').height() - panBoundary)) {
+                panTimer = true;
+                pan(this, 'down');
+            } else {
+                try {
+                    clearTimeout(panTimer);
+                } catch (e) {
+
+                }
+            }
+
+            d.x0 += d3.event.dy;
+            d.y0 += d3.event.dx;
+            var node = d3.select(this);
+            node.attr("transform", "translate(" + d.y0 + "," + d.x0 + ")");
+            updateTempConnector();
+        }).on("dragend", function(d) {
+            if (d == root) {
+                return;
+            }
+            domNode = this;
+            if (selectedNode) {
+                // now remove the element from the parent, and insert it into the new elements children
+                var index = draggingNode.parent.children.indexOf(draggingNode);
+                if (index > -1) {
+                    draggingNode.parent.children.splice(index, 1);
+                }
+                if (typeof selectedNode.children !== 'undefined' || typeof selectedNode._children !== 'undefined') {
+                    if (typeof selectedNode.children !== 'undefined') {
+                        selectedNode.children.push(draggingNode);
+                    } else {
+                        selectedNode._children.push(draggingNode);
+                    }
+                } else {
+                    selectedNode.children = [];
+                    selectedNode.children.push(draggingNode);
+                }
+                // Make sure that the node being added to is expanded so user can see added node is correctly moved
+                expand(selectedNode);
+                sortTree();
+                endDrag();
+            } else {
+                endDrag();
+            }
+        });
+
+    function endDrag() {
+        selectedNode = null;
+        d3.selectAll('.ghostCircle').attr('class', 'ghostCircle');
+        d3.select(domNode).attr('class', 'node');
+        // now restore the mouseover event or we won't be able to drag a 2nd time
+        d3.select(domNode).select('.ghostCircle').attr('pointer-events', '');
+        updateTempConnector();
+        if (draggingNode !== null) {
+            update(root);
+            centerNode(draggingNode);
+            draggingNode = null;
+        }
+    }
+
+    // Helper functions for collapsing and expanding nodes.
+
+    function collapse(d) {
+        if (d.children) {
+            d._children = d.children;
+            d._children.forEach(collapse);
+            d.children = null;
+        }
+    }
+
+    function expand(d) {
+        if (d._children) {
+            d.children = d._children;
+            d.children.forEach(expand);
+            d._children = null;
+        }
+    }
+
+    var overCircle = function(d) {
+        selectedNode = d;
+        updateTempConnector();
+    };
+    var outCircle = function(d) {
+        selectedNode = null;
+        updateTempConnector();
+    };
+
+    // Function to update the temporary connector indicating dragging affiliation
+    var updateTempConnector = function() {
+        var data = [];
+        if (draggingNode !== null && selectedNode !== null) {
+            // have to flip the source coordinates since we did this for the existing connectors on the original tree
+            data = [{
+                source: {
+                    x: selectedNode.y0,
+                    y: selectedNode.x0
+                },
+                target: {
+                    x: draggingNode.y0,
+                    y: draggingNode.x0
+                }
+            }];
+        }
+        var link = svgGroup.selectAll(".templink").data(data);
+
+        link.enter().append("path")
+            .attr("class", "templink")
+            .attr("d", d3.svg.diagonal())
+            .attr('pointer-events', 'none');
+
+        link.attr("d", d3.svg.diagonal());
+
+        link.exit().remove();
+    };
+
+    // Function to center node when clicked/dropped so node doesn't get lost when collapsing/moving with large amount of children.
+
+    function centerNode(source) {
+        scale = zoomListener.scale();
+        x = -source.y0;
+        y = -source.x0;
+        x = x * scale + viewerWidth / 4;
+        y = y * scale + viewerHeight / 4;
+        d3.select('g').transition()
+            .duration(duration)
+            .attr("transform", "translate(" + x + "," + y + ")scale(" + scale + ")");
+        zoomListener.scale(scale);
+        zoomListener.translate([x, y]);
+    }
+
+    // Toggle children function
+
+    function toggleChildren(d) {
+        if (d.children) {
+            d._children = d.children;
+            d.children = null;
+        } else if (d._children) {
+            d.children = d._children;
+            d._children = null;
+        }
+        return d;
+    }
+
+    // Toggle children on click.
+
+    function click(d) {
+        if (d3.event.defaultPrevented) return; // click suppressed
+        d = toggleChildren(d);
+        update(d);
+        centerNode(d);
+        
+    }
+
+    function update(source) {
+        // Compute the new height, function counts total children of root node and sets tree height accordingly.
+        // This prevents the layout looking squashed when new nodes are made visible or looking sparse when nodes are removed
+        // This makes the layout more consistent.
+        var levelWidth = [1];
+        var childCount = function(level, n) {
+
+            if (n.children && n.children.length > 0) {
+                if (levelWidth.length <= level + 1) levelWidth.push(0);
+
+                levelWidth[level + 1] += n.children.length;
+                n.children.forEach(function(d) {
+                    childCount(level + 1, d);
+                });
+            }
+        };
+        childCount(0, root);
+        var newHeight = d3.max(levelWidth) * 25; // 25 pixels per line  
+        tree = tree.size([newHeight, viewerWidth]);
+
+        // Compute the new tree layout.
+        var nodes = tree.nodes(root).reverse(),
+            links = tree.links(nodes);
+
+        // Set widths between levels based on maxLabelLength.
+        nodes.forEach(function(d) {
+            d.y = (d.depth * (maxLabelLength * 10)); //maxLabelLength * 10px
+            // alternatively to keep a fixed scale one can set a fixed depth per level
+            // Normalize for fixed-depth by commenting out below line
+            // d.y = (d.depth * 500); //500px per level.
+        });
+
+        // Update the nodes¡­
+        node = svgGroup.selectAll("g.node")
+            .data(nodes, function(d) {
+                return d.id || (d.id = ++i);
+            });
+
+        // Enter any new nodes at the parent's previous position.
+        var nodeEnter = node.enter().append("g")
+            .call(dragListener)
+            .attr("class", "node")
+            .attr("transform", function(d) {
+                return "translate(" + source.y0 + "," + source.x0 + ")";
+            })
+            .on('click', click);
+
+        nodeEnter.append("circle")
+            .attr('class', 'nodeCircle')
+            .attr("r", 0)
+            .style("fill", function(d) {
+                return d._children ? "lightsteelblue" : "#fff";
+            });
+
+        nodeEnter.append("text")
+            .attr("x", function(d) {
+                return d.children || d._children ? -10 : 10;
+            })
+            .attr("dy", ".35em")
+            .attr('class', 'nodeText')
+            .attr("text-anchor", function(d) {
+                return d.children || d._children ? "end" : "start";
+            })
+            .text(function(d) {
+                return d.name;
+            })
+            .style("fill-opacity", 0);
+
+        // phantom node to give us mouseover in a radius around it
+        nodeEnter.append("circle")
+            .attr('class', 'ghostCircle')
+            .attr("r", 30)
+            .attr("opacity", 0.2) // change this to zero to hide the target area
+        .style("fill", "red")
+            .attr('pointer-events', 'mouseover')
+            .on("mouseover", function(node) {
+                overCircle(node);
+            })
+            .on("mouseout", function(node) {
+                outCircle(node);
+            });
+
+        // Update the text to reflect whether node has children or not.
+        node.select('text')
+            .attr("x", function(d) {
+                return d.children || d._children ? -10 : 10;
+            })
+            .attr("text-anchor", function(d) {
+                return d.children || d._children ? "end" : "start";
+            })
+            .text(function(d) {
+                return d.name;
+            });
+
+        // Change the circle fill depending on whether it has children and is collapsed
+        node.select("circle.nodeCircle")
+            .attr("r", 4.5)
+            .style("fill", function(d) {
+                return d._children ? "lightsteelblue" : "#fff";
+            });
+
+        // Transition nodes to their new position.
+        var nodeUpdate = node.transition()
+            .duration(duration)
+            .attr("transform", function(d) {
+                return "translate(" + d.y + "," + d.x + ")";
+            });
+
+        // Fade the text in
+        nodeUpdate.select("text")
+            .style("fill-opacity", 1);
+
+        // Transition exiting nodes to the parent's new position.
+        var nodeExit = node.exit().transition()
+            .duration(duration)
+            .attr("transform", function(d) {
+                return "translate(" + source.y + "," + source.x + ")";
+            })
+            .remove();
+
+        nodeExit.select("circle")
+            .attr("r", 0);
+
+        nodeExit.select("text")
+            .style("fill-opacity", 0);
+
+        // Update the links¡­
+        var link = svgGroup.selectAll("path.link")
+            .data(links, function(d) {
+                return d.target.id;
+            });
+
+        // Enter any new links at the parent's previous position.
+        link.enter().insert("path", "g")
+            .attr("class", "link")
+            .attr("d", function(d) {
+                var o = {
+                    x: source.x0,
+                    y: source.y0
+                };
+                return diagonal({
+                    source: o,
+                    target: o
+                });
+            });
+
+        // Transition links to their new position.
+        link.transition()
+            .duration(duration)
+            .attr("d", diagonal);
+
+        // Transition exiting nodes to the parent's new position.
+        link.exit().transition()
+            .duration(duration)
+            .attr("d", function(d) {
+                var o = {
+                    x: source.x,
+                    y: source.y
+                };
+                return diagonal({
+                    source: o,
+                    target: o
+                });
+            })
+            .remove();
+
+        // Stash the old positions for transition.
+        nodes.forEach(function(d) {
+            d.x0 = d.x;
+            d.y0 = d.y;
+        });
+    }
+
+    // Append a group which holds all nodes and which the zoom Listener can act upon.
+    var svgGroup = baseSvg.append("g");
+
+    // Define the root
+    root = treeData;
+    root.x0 = viewerHeight / 2;
+    root.y0 = 0;
+
+    // Layout the tree initially and center on the root node.
+    update(root);
+    centerNode(root);
+});
+
+}
+</script>
+</section> 
+</div>
+</body>
+</html>
